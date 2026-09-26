@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tree ID Trainer</title>
+  <meta name="theme-color" content="#2f5d34">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <h1>Tree ID Trainer</h1>
+      <p id="stats-line" class="stats-line"></p>
+    </header>
+
+    <section id="home-view" class="view">
+      <button id="start-key-btn" class="mode-btn">🌲 Dichotomous Key</button>
+      <button id="start-flashcards-btn" class="mode-btn">🍁 Flashcards</button>
+    </section>
+
+    <section id="key-view" class="view hidden">
+      <button class="back-btn" id="key-home-btn">&larr; Home</button>
+      <div id="key-question"></div>
+      <div id="key-candidates" class="hidden"></div>
+      <div id="key-reveal" class="hidden"></div>
+      <div class="key-controls">
+        <button id="key-back-btn">Back</button>
+        <button id="key-restart-btn">Restart</button>
+      </div>
+    </section>
+
+    <section id="flashcard-view" class="view hidden">
+      <button class="back-btn" id="flash-home-btn">&larr; Home</button>
+      <div class="flash-filters">
+        <label><input type="radio" name="filter" value="all" checked> All</label>
+        <label><input type="radio" name="filter" value="learning"> Needs Practice</label>
+        <label><input type="radio" name="filter" value="known"> Known</label>
+        <button id="shuffle-btn" type="button">Shuffle</button>
+      </div>
+      <div id="flashcard"></div>
+      <div class="flash-controls hidden" id="flash-answer-controls">
+        <button id="knew-it-btn">Knew it ✓</button>
+        <button id="still-learning-btn">Still learning ✗</button>
+      </div>
+      <div class="flash-nav">
+        <button id="prev-card-btn">&larr; Prev</button>
+        <span id="flash-progress"></span>
+        <button id="next-card-btn">Next &rarr;</button>
+      </div>
+    </section>
+  </div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

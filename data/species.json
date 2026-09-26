@@ -1,0 +1,49 @@
+[
+  { "id": "thuja-occidentalis", "commonName": "Eastern White-Cedar", "latinName": "Thuja occidentalis", "groupId": "Group1", "genus": "Thuja", "image": "" },
+
+  { "id": "pinus-strobus", "commonName": "Eastern White Pine", "latinName": "Pinus strobus", "groupId": "Group3", "genus": "Pinus", "image": "" },
+  { "id": "pinus-resinosa", "commonName": "Red Pine", "latinName": "Pinus resinosa", "groupId": "Group3", "genus": "Pinus", "image": "" },
+  { "id": "pinus-banksiana", "commonName": "Jack Pine", "latinName": "Pinus banksiana", "groupId": "Group3", "genus": "Pinus", "image": "" },
+
+  { "id": "larix-laricina", "commonName": "Tamarack", "latinName": "Larix laricina", "groupId": "Group4", "genus": "Larix", "image": "" },
+
+  { "id": "picea-abies", "commonName": "Norway Spruce", "latinName": "Picea abies", "groupId": "Group5", "genus": "Picea", "image": "" },
+  { "id": "picea-glauca", "commonName": "White Spruce", "latinName": "Picea glauca", "groupId": "Group5", "genus": "Picea", "image": "" },
+  { "id": "picea-rubens", "commonName": "Red Spruce", "latinName": "Picea rubens", "groupId": "Group5", "genus": "Picea", "image": "" },
+  { "id": "picea-mariana", "commonName": "Black Spruce", "latinName": "Picea mariana", "groupId": "Group5", "genus": "Picea", "image": "" },
+  { "id": "tsuga-canadensis", "commonName": "Eastern Hemlock", "latinName": "Tsuga canadensis", "groupId": "Group5", "genus": "Tsuga", "image": "" },
+  { "id": "abies-balsamea", "commonName": "Balsam Fir", "latinName": "Abies balsamea", "groupId": "Group5", "genus": "Abies", "image": "" },
+
+  { "id": "acer-platanoides", "commonName": "Norway Maple", "latinName": "Acer platanoides", "groupId": "Group8", "genus": "Acer", "image": "" },
+  { "id": "acer-saccharum", "commonName": "Sugar Maple", "latinName": "Acer saccharum", "groupId": "Group8", "genus": "Acer", "image": "" },
+  { "id": "acer-rubrum", "commonName": "Red Maple", "latinName": "Acer rubrum", "groupId": "Group8", "genus": "Acer", "image": "" },
+  { "id": "acer-saccharinum", "commonName": "Silver Maple", "latinName": "Acer saccharinum", "groupId": "Group8", "genus": "Acer", "image": "" },
+  { "id": "acer-negundo", "commonName": "Manitoba Maple", "latinName": "Acer negundo", "groupId": "Group8", "genus": "Acer", "image": "" },
+  { "id": "acer-spicatum", "commonName": "Mountain Maple", "latinName": "Acer spicatum", "groupId": "Group8", "genus": "Acer", "image": "" },
+  { "id": "acer-pensylvanicum", "commonName": "Striped Maple", "latinName": "Acer pensylvanicum", "groupId": "Group8", "genus": "Acer", "image": "" },
+  { "id": "fraxinus-americana", "commonName": "White Ash", "latinName": "Fraxinus americana", "groupId": "Group8", "genus": "Fraxinus", "image": "" },
+  { "id": "fraxinus-pennsylvanica", "commonName": "Green Ash", "latinName": "Fraxinus pennsylvanica", "groupId": "Group8", "genus": "Fraxinus", "image": "" },
+
+  { "id": "robinia-pseudoacacia", "commonName": "Black Locust", "latinName": "Robinia pseudoacacia", "groupId": "Group9", "genus": "Robinia", "image": "" },
+  { "id": "sorbus-americana", "commonName": "American Mountain-Ash", "latinName": "Sorbus americana", "groupId": "Group9", "genus": "Sorbus", "image": "" },
+  { "id": "juglans-cinerea", "commonName": "Butternut", "latinName": "Juglans cinerea", "groupId": "Group9", "genus": "Juglans", "image": "" },
+  { "id": "rhus-typhina", "commonName": "Staghorn Sumac", "latinName": "Rhus typhina", "groupId": "Group9", "genus": "Rhus", "image": "" },
+
+  { "id": "quercus-macrocarpa", "commonName": "Bur Oak", "latinName": "Quercus macrocarpa", "groupId": "Group10", "genus": "Quercus", "image": "" },
+  { "id": "quercus-rubra", "commonName": "Red Oak", "latinName": "Quercus rubra", "groupId": "Group10", "genus": "Quercus", "image": "" },
+
+  { "id": "tilia-americana", "commonName": "Basswood", "latinName": "Tilia americana", "groupId": "Group11", "genus": "Tilia", "image": "" },
+  { "id": "salix-spp", "commonName": "Willow species", "latinName": "Salix spp.", "groupId": "Group11", "genus": "Salix", "image": "" },
+  { "id": "fagus-grandifolia", "commonName": "American Beech", "latinName": "Fagus grandifolia", "groupId": "Group11", "genus": "Fagus", "image": "" },
+  { "id": "betula-papyrifera", "commonName": "White Birch", "latinName": "Betula papyrifera", "groupId": "Group11", "genus": "Betula", "image": "" },
+  { "id": "betula-populifolia", "commonName": "Gray Birch", "latinName": "Betula populifolia", "groupId": "Group11", "genus": "Betula", "image": "" },
+  { "id": "betula-alleghaniensis", "commonName": "Yellow Birch", "latinName": "Betula alleghaniensis", "groupId": "Group11", "genus": "Betula", "image": "" },
+  { "id": "alnus-incana", "commonName": "Speckled Alder", "latinName": "Alnus incana", "groupId": "Group11", "genus": "Alnus", "image": "" },
+  { "id": "ostrya-virginiana", "commonName": "Ironwood", "latinName": "Ostrya virginiana", "groupId": "Group11", "genus": "Ostrya", "image": "" },
+  { "id": "populus-balsamifera", "commonName": "Balsam Poplar", "latinName": "Populus balsamifera", "groupId": "Group11", "genus": "Populus", "image": "" },
+  { "id": "populus-tremuloides", "commonName": "Trembling Aspen", "latinName": "Populus tremuloides", "groupId": "Group11", "genus": "Populus", "image": "" },
+  { "id": "populus-grandidentata", "commonName": "Largetooth Aspen", "latinName": "Populus grandidentata", "groupId": "Group11", "genus": "Populus", "image": "" },
+  { "id": "ulmus-americana", "commonName": "White Elm", "latinName": "Ulmus americana", "groupId": "Group11", "genus": "Ulmus", "image": "" },
+  { "id": "prunus-pensylvanica", "commonName": "Pin Cherry", "latinName": "Prunus pensylvanica", "groupId": "Group11", "genus": "Prunus", "image": "" },
+  { "id": "prunus-virginiana", "commonName": "Choke Cherry", "latinName": "Prunus virginiana", "groupId": "Group11", "genus": "Prunus", "image": "" }
+]

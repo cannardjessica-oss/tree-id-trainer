@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <rect width="200" height="200" fill="#e4e0d3"/>
+  <path d="M100 40 C70 60 50 90 50 115 C50 140 72 155 100 155 C128 155 150 140 150 115 C150 90 130 60 100 40 Z" fill="#c9c2ab"/>
+  <line x1="100" y1="155" x2="100" y2="85" stroke="#a8a08a" stroke-width="4"/>
+  <text x="100" y="180" font-family="sans-serif" font-size="14" fill="#8a8370" text-anchor="middle">no photo yet</text>
+</svg>

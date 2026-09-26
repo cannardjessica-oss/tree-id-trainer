@@ -1,0 +1,3 @@
+// Reserved for user photos. Drop image files here (e.g. thuja-occidentalis.jpg)
+// and set the matching "image" path in ../data/species.json, e.g.
+// "image": "images/thuja-occidentalis.jpg"

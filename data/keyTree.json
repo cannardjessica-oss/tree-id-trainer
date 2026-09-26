@@ -1,0 +1,109 @@
+{
+  "start": "root",
+  "nodes": {
+    "root": {
+      "question": "Needles/scales or broad leaves?",
+      "hint": "Look at what is attached to the twig.",
+      "options": [
+        { "label": "Needles or scale-like leaves (conifer)", "next": "needleType" },
+        { "label": "Broad, flat leaves", "next": "leafArrangement" }
+      ]
+    },
+
+    "needleType": {
+      "question": "What do the needles/scales look like? (Groups 1, 3, 4, 5)",
+      "hint": "Compare spacing, bundling, and shape.",
+      "options": [
+        {
+          "label": "Short needles or scales, closely spaced in opposite pairs or whorls of 3, often overlapping and obscuring the stem",
+          "result": { "groupId": "Group1" }
+        },
+        {
+          "label": "Needles evergreen, in bundles of 2, 3, or 5",
+          "result": { "groupId": "Group3" }
+        },
+        {
+          "label": "Needles in tufts of 10+ on dwarf shoots, also single on long shoots (deciduous)",
+          "result": { "groupId": "Group4" }
+        },
+        {
+          "label": "Needles evergreen, single, flat or 4-sided",
+          "next": "group5Genus"
+        }
+      ]
+    },
+
+    "group5Genus": {
+      "question": "Group 5 — which genus?",
+      "hint": "Single evergreen needles: compare needle shape and feel.",
+      "options": [
+        { "label": "Picea (Spruce) — 4-sided needles, roll easily between fingers", "result": { "groupId": "Group5", "genus": "Picea" } },
+        { "label": "Abies (Fir) — flat needles, flexible, rounded tips", "result": { "groupId": "Group5", "genus": "Abies" } },
+        { "label": "Tsuga (Hemlock) — short flat needles in flattened sprays", "result": { "groupId": "Group5", "genus": "Tsuga" } }
+      ]
+    },
+
+    "leafArrangement": {
+      "question": "Leaf arrangement: opposite or alternate?",
+      "hint": "Check how leaves attach along the twig.",
+      "options": [
+        { "label": "Opposite (or sub-opposite/whorled)", "next": "group8Genus" },
+        { "label": "Alternate", "next": "leafType" }
+      ]
+    },
+
+    "group8Genus": {
+      "question": "Group 8 — which genus?",
+      "hint": "Opposite leaves, simple or compound.",
+      "options": [
+        { "label": "Acer (Maple)", "result": { "groupId": "Group8", "genus": "Acer" } },
+        { "label": "Fraxinus (Ash)", "result": { "groupId": "Group8", "genus": "Fraxinus" } }
+      ]
+    },
+
+    "leafType": {
+      "question": "Leaf blade: simple or compound?",
+      "hint": "Compound leaves are divided into 3 or more leaflets.",
+      "options": [
+        { "label": "Compound (3+ leaflets)", "next": "group9Genus" },
+        { "label": "Simple", "next": "leafMargin" }
+      ]
+    },
+
+    "group9Genus": {
+      "question": "Group 9 — which genus?",
+      "hint": "Alternate, compound leaves.",
+      "options": [
+        { "label": "Robinia (Black Locust)", "result": { "groupId": "Group9", "genus": "Robinia" } },
+        { "label": "Sorbus (Mountain-Ash)", "result": { "groupId": "Group9", "genus": "Sorbus" } },
+        { "label": "Juglans (Butternut)", "result": { "groupId": "Group9", "genus": "Juglans" } },
+        { "label": "Rhus (Sumac)", "result": { "groupId": "Group9", "genus": "Rhus" } }
+      ]
+    },
+
+    "leafMargin": {
+      "question": "Leaf edge: lobed or toothed?",
+      "hint": "Groups 10 (lobed) vs 11 (toothed).",
+      "options": [
+        { "label": "Lobed", "result": { "groupId": "Group10" } },
+        { "label": "Toothed", "next": "group11Genus" }
+      ]
+    },
+
+    "group11Genus": {
+      "question": "Group 11 — which genus?",
+      "hint": "Alternate, simple, toothed leaves.",
+      "options": [
+        { "label": "Tilia (Basswood)", "result": { "groupId": "Group11", "genus": "Tilia" } },
+        { "label": "Salix (Willow)", "result": { "groupId": "Group11", "genus": "Salix" } },
+        { "label": "Fagus (Beech)", "result": { "groupId": "Group11", "genus": "Fagus" } },
+        { "label": "Betula (Birch)", "result": { "groupId": "Group11", "genus": "Betula" } },
+        { "label": "Alnus (Alder)", "result": { "groupId": "Group11", "genus": "Alnus" } },
+        { "label": "Ostrya (Ironwood)", "result": { "groupId": "Group11", "genus": "Ostrya" } },
+        { "label": "Populus (Poplar/Aspen)", "result": { "groupId": "Group11", "genus": "Populus" } },
+        { "label": "Ulmus (Elm)", "result": { "groupId": "Group11", "genus": "Ulmus" } },
+        { "label": "Prunus (Cherry)", "result": { "groupId": "Group11", "genus": "Prunus" } }
+      ]
+    }
+  }
+}

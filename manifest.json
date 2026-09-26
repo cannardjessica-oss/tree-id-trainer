@@ -1,0 +1,13 @@
+{
+  "name": "Tree ID Trainer",
+  "short_name": "TreeID",
+  "description": "Dichotomous key and flashcard trainer for FOR1001 tree species identification.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f1ea",
+  "theme_color": "#2f5d34",
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
