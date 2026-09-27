@@ -1,6 +1,87 @@
 {
-  "start": "root",
+  "start": "rootGymno",
   "nodes": {
+    "rootGymno": {
+      "question": "Scales or needles?",
+      "hint": "Look at what's attached to the twig.",
+      "options": [
+        { "label": "Scales", "result": { "speciesId": "thuja-occidentalis" } },
+        { "label": "Needles", "next": "needleArrangement" }
+      ]
+    },
+
+    "needleArrangement": {
+      "question": "Are the needles bundled or single?",
+      "options": [
+        { "label": "In bundles or groups", "next": "bundleCount" },
+        { "label": "Single needles", "next": "singleShape" }
+      ]
+    },
+
+    "bundleCount": {
+      "question": "How many needles per bundle?",
+      "options": [
+        { "label": "2 needles", "next": "twoNeedleLength" },
+        { "label": "More than 2 needles", "next": "manyNeedleCount" }
+      ]
+    },
+
+    "twoNeedleLength": {
+      "question": "Needle length?",
+      "options": [
+        { "label": "Short needles", "result": { "speciesId": "pinus-banksiana" } },
+        { "label": "Long needles", "result": { "speciesId": "pinus-resinosa" } }
+      ]
+    },
+
+    "manyNeedleCount": {
+      "question": "How many needles in the bundle?",
+      "options": [
+        { "label": "5 needles", "result": { "speciesId": "pinus-strobus" } },
+        { "label": "More than 5 needles", "result": { "speciesId": "larix-laricina" } }
+      ]
+    },
+
+    "singleShape": {
+      "question": "Do the needles roll easily between your fingers?",
+      "options": [
+        { "label": "Flattened (does not roll between fingers)", "next": "flatBase" },
+        { "label": "Four sided (rolls between fingers)", "next": "roundSize" }
+      ]
+    },
+
+    "flatBase": {
+      "question": "How does the needle attach to the twig?",
+      "options": [
+        { "label": "Petiole base", "result": { "speciesId": "tsuga-canadensis" } },
+        { "label": "Suction cup base", "result": { "speciesId": "abies-balsamea" } }
+      ]
+    },
+
+    "roundSize": {
+      "question": "Needle size?",
+      "options": [
+        { "label": "Smaller", "next": "smallColor" },
+        { "label": "Larger", "next": "largeColor" }
+      ]
+    },
+
+    "smallColor": {
+      "question": "Needle color?",
+      "options": [
+        { "label": "Yellow-green needles", "result": { "speciesId": "picea-rubens" } },
+        { "label": "Blue-green needles", "result": { "speciesId": "picea-mariana" } }
+      ]
+    },
+
+    "largeColor": {
+      "question": "Needle color?",
+      "options": [
+        { "label": "Dark green needles", "result": { "speciesId": "picea-abies" } },
+        { "label": "Blue-green needles", "result": { "speciesId": "picea-glauca" } }
+      ]
+    },
+
     "root": {
       "question": "Needles/scales or broad leaves?",
       "hint": "Look at what is attached to the twig.",

@@ -2,6 +2,10 @@ import { initKeyMode } from "./key.js";
 import { initFlashcardMode } from "./flashcards.js";
 import * as progress from "./progress.js";
 
+// Only gymnosperms are active for now; angiosperm groups (8-11) stay in
+// species.json/keyTree.json but are filtered out until that key is ready.
+const ACTIVE_GROUP_IDS = ["Group1", "Group3", "Group4", "Group5"];
+
 async function loadData() {
   const [speciesRes, keyTreeRes] = await Promise.all([
     fetch("data/species.json"),
@@ -27,23 +31,27 @@ function updateStats(speciesList) {
 
 async function main() {
   const { speciesList, keyTree } = await loadData();
-  updateStats(speciesList);
+  const activeSpecies = speciesList.filter((s) =>
+    ACTIVE_GROUP_IDS.includes(s.groupId),
+  );
+  updateStats(activeSpecies);
 
   const keyMode = initKeyMode({
-    speciesList,
+    speciesList: activeSpecies,
     keyTree,
     progress,
     elements: {
       question: document.getElementById("key-question"),
       candidates: document.getElementById("key-candidates"),
       reveal: document.getElementById("key-reveal"),
+      breadcrumb: document.getElementById("key-breadcrumb"),
       backBtn: document.getElementById("key-back-btn"),
       restartBtn: document.getElementById("key-restart-btn"),
     },
   });
 
   const flashcardMode = initFlashcardMode({
-    speciesList,
+    speciesList: activeSpecies,
     progress,
     elements: {
       card: document.getElementById("flashcard"),
@@ -72,12 +80,12 @@ async function main() {
 
   document.getElementById("key-home-btn").addEventListener("click", () => {
     showView("home-view");
-    updateStats(speciesList);
+    updateStats(activeSpecies);
   });
 
   document.getElementById("flash-home-btn").addEventListener("click", () => {
     showView("home-view");
-    updateStats(speciesList);
+    updateStats(activeSpecies);
   });
 
   if ("serviceWorker" in navigator) {

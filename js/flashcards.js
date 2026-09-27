@@ -1,10 +1,28 @@
-const PLACEHOLDER_IMAGE = "icons/placeholder.svg";
-
 export function initFlashcardMode({ speciesList, progress, elements }) {
   let filtered = [...speciesList];
   let index = 0;
   let flipped = false;
   let filterMode = "all";
+
+  function createSpeciesImage(species, altText) {
+    if (species.image) {
+      const img = document.createElement("img");
+      img.src = species.image;
+      img.alt = altText;
+      img.addEventListener("error", () => {
+        img.replaceWith(createImagePlaceholder());
+      });
+      return img;
+    }
+    return createImagePlaceholder();
+  }
+
+  function createImagePlaceholder() {
+    const div = document.createElement("div");
+    div.className = "image-placeholder";
+    div.textContent = "Photo coming soon";
+    return div;
+  }
 
   function applyFilter() {
     filtered =
@@ -43,12 +61,10 @@ export function initFlashcardMode({ speciesList, progress, elements }) {
     face.className = "flashcard-face";
     face.tabIndex = 0;
 
-    const img = document.createElement("img");
-    img.src = species.image || PLACEHOLDER_IMAGE;
-    img.alt = flipped ? `${species.commonName} leaves` : "Tree leaves";
-    img.addEventListener("error", () => {
-      img.src = PLACEHOLDER_IMAGE;
-    });
+    const img = createSpeciesImage(
+      species,
+      flipped ? `${species.commonName} leaves` : "Tree leaves",
+    );
     face.appendChild(img);
 
     if (!flipped) {

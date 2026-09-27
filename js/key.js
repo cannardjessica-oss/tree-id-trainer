@@ -1,16 +1,42 @@
-const PLACEHOLDER_IMAGE = "icons/placeholder.svg";
-
 export function initKeyMode({ speciesList, keyTree, progress, elements }) {
   let path = [];
+  let crumbs = [];
   let currentNodeId = keyTree.start;
   let view = "question"; // 'question' | 'candidates' | 'reveal'
   let lastResult = null;
   let lastCandidates = [];
 
   function matchesResult(species, result) {
+    if (result.speciesId) return species.id === result.speciesId;
     if (species.groupId !== result.groupId) return false;
     if (result.genus && species.genus !== result.genus) return false;
     return true;
+  }
+
+  function createSpeciesImage(species, altText) {
+    if (species.image) {
+      const img = document.createElement("img");
+      img.src = species.image;
+      img.alt = altText;
+      img.addEventListener("error", () => {
+        img.replaceWith(createImagePlaceholder());
+      });
+      return img;
+    }
+    return createImagePlaceholder();
+  }
+
+  function createImagePlaceholder() {
+    const div = document.createElement("div");
+    div.className = "image-placeholder";
+    div.textContent = "Photo coming soon";
+    return div;
+  }
+
+  function renderBreadcrumb() {
+    if (elements.breadcrumb) {
+      elements.breadcrumb.textContent = crumbs.join(" \u203a ");
+    }
   }
 
   function showOnly(activeEl) {
@@ -27,6 +53,7 @@ export function initKeyMode({ speciesList, keyTree, progress, elements }) {
 
   function renderQuestion() {
     view = "question";
+    renderBreadcrumb();
     showOnly(elements.question);
     const node = keyTree.nodes[currentNodeId];
     elements.question.innerHTML = "";
@@ -56,6 +83,7 @@ export function initKeyMode({ speciesList, keyTree, progress, elements }) {
   }
 
   function handleAnswer(opt) {
+    crumbs.push(opt.label);
     if (opt.result) {
       lastResult = opt.result;
       renderCandidates(opt.result);
@@ -70,6 +98,7 @@ export function initKeyMode({ speciesList, keyTree, progress, elements }) {
     const candidates = speciesList.filter((s) => matchesResult(s, result));
     lastCandidates = candidates;
     view = "candidates";
+    renderBreadcrumb();
     showOnly(elements.candidates);
     elements.candidates.innerHTML = "";
 
@@ -84,12 +113,7 @@ export function initKeyMode({ speciesList, keyTree, progress, elements }) {
       const card = document.createElement("button");
       card.type = "button";
       card.className = "candidate-card";
-      const img = document.createElement("img");
-      img.src = species.image || PLACEHOLDER_IMAGE;
-      img.alt = `${species.commonName} leaves`;
-      img.addEventListener("error", () => {
-        img.src = PLACEHOLDER_IMAGE;
-      });
+      const img = createSpeciesImage(species, `${species.commonName} leaves`);
       const label = document.createElement("span");
       label.className = "candidate-label";
       label.textContent = "?";
@@ -103,15 +127,11 @@ export function initKeyMode({ speciesList, keyTree, progress, elements }) {
 
   function renderReveal(species) {
     view = "reveal";
+    renderBreadcrumb();
     showOnly(elements.reveal);
     elements.reveal.innerHTML = "";
 
-    const img = document.createElement("img");
-    img.src = species.image || PLACEHOLDER_IMAGE;
-    img.alt = `${species.commonName} leaves`;
-    img.addEventListener("error", () => {
-      img.src = PLACEHOLDER_IMAGE;
-    });
+    const img = createSpeciesImage(species, `${species.commonName} leaves`);
 
     const h2 = document.createElement("h2");
     h2.textContent = species.commonName;
@@ -163,6 +183,7 @@ export function initKeyMode({ speciesList, keyTree, progress, elements }) {
 
   function goBack() {
     if (view === "candidates") {
+      crumbs.pop();
       renderQuestion();
       return;
     }
@@ -171,12 +192,14 @@ export function initKeyMode({ speciesList, keyTree, progress, elements }) {
       return;
     }
     if (path.length === 0) return;
+    crumbs.pop();
     currentNodeId = path.pop();
     renderQuestion();
   }
 
   function resetToRoot() {
     path = [];
+    crumbs = [];
     currentNodeId = keyTree.start;
     lastResult = null;
     lastCandidates = [];

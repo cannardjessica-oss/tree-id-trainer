@@ -93,6 +93,13 @@ body {
   font-size: 0.9rem;
 }
 
+.key-breadcrumb {
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  min-height: 1.2em;
+}
+
 .options {
   display: flex;
   flex-direction: column;
@@ -141,6 +148,12 @@ body {
   background: #e4e0d3;
 }
 
+.candidate-card .image-placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+}
+
 .candidate-label {
   font-weight: bold;
   color: var(--green-dark);
@@ -161,6 +174,22 @@ body {
   object-fit: cover;
   border-radius: 10px;
   background: #e4e0d3;
+}
+
+.image-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 140px;
+  max-height: 260px;
+  border: 2px dashed #c9c3b3;
+  border-radius: 10px;
+  background: #e4e0d3;
+  color: #7a7566;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
 }
 
 .latin-name {
