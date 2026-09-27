@@ -18,26 +18,36 @@ function saveAll(data) {
   }
 }
 
-export function getStatus(speciesId) {
-  const data = loadAll();
-  return data[speciesId]?.status ?? "new";
+function keyFor(id, namespace) {
+  return namespace ? `${namespace}:${id}` : id;
 }
 
-export function setStatus(speciesId, status) {
+export function getStatus(speciesId, namespace) {
   const data = loadAll();
-  data[speciesId] = { status, lastSeen: new Date().toISOString() };
+  return data[keyFor(speciesId, namespace)]?.status ?? "new";
+}
+
+export function setStatus(speciesId, status, namespace) {
+  const data = loadAll();
+  data[keyFor(speciesId, namespace)] = {
+    status,
+    lastSeen: new Date().toISOString(),
+  };
   saveAll(data);
 }
 
-export function getStats(totalCount) {
+export function getStats(totalCount, namespace) {
   const data = loadAll();
   let known = 0;
   let learning = 0;
-  for (const id of Object.keys(data)) {
-    if (data[id].status === "known") known += 1;
-    else if (data[id].status === "learning") learning += 1;
+  let seen = 0;
+  for (const key of Object.keys(data)) {
+    const hasNamespace = key.includes(":");
+    if (namespace ? !key.startsWith(`${namespace}:`) : hasNamespace) continue;
+    seen += 1;
+    if (data[key].status === "known") known += 1;
+    else if (data[key].status === "learning") learning += 1;
   }
-  const seen = Object.keys(data).length;
   return {
     known,
     learning,

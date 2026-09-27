@@ -29,6 +29,45 @@ function updateStats(speciesList) {
     `${stats.known} known · ${stats.learning} learning · ${stats.new} new (out of ${stats.total})`;
 }
 
+function renderBrowseView(container, activeSpecies) {
+  const map = new Map();
+  for (const s of activeSpecies) {
+    if (!map.has(s.genus)) map.set(s.genus, []);
+    map.get(s.genus).push(s);
+  }
+  const groups = Array.from(map.entries())
+    .map(([genus, species]) => ({
+      genus,
+      species: [...species].sort((a, b) =>
+        a.commonName.localeCompare(b.commonName),
+      ),
+    }))
+    .sort((a, b) => a.genus.localeCompare(b.genus));
+
+  container.innerHTML = "";
+  for (const group of groups) {
+    const section = document.createElement("section");
+    section.className = "genus-group";
+
+    const h2 = document.createElement("h2");
+    h2.textContent = group.genus;
+    section.appendChild(h2);
+
+    const ul = document.createElement("ul");
+    for (const s of group.species) {
+      const li = document.createElement("li");
+      li.textContent = `${s.commonName} — `;
+      const em = document.createElement("em");
+      em.textContent = s.latinName;
+      li.appendChild(em);
+      ul.appendChild(li);
+    }
+    section.appendChild(ul);
+
+    container.appendChild(section);
+  }
+}
+
 async function main() {
   const { speciesList, keyTree } = await loadData();
   const activeSpecies = speciesList.filter((s) =>
@@ -74,9 +113,27 @@ async function main() {
   document
     .getElementById("start-flashcards-btn")
     .addEventListener("click", () => {
-      showView("flashcard-view");
-      flashcardMode.start();
+      showView("flashcard-select-view");
     });
+
+  document
+    .getElementById("flashcards-species-btn")
+    .addEventListener("click", () => {
+      showView("flashcard-view");
+      flashcardMode.start("species");
+    });
+
+  document
+    .getElementById("flashcards-genus-btn")
+    .addEventListener("click", () => {
+      showView("flashcard-view");
+      flashcardMode.start("genus");
+    });
+
+  document.getElementById("start-browse-btn").addEventListener("click", () => {
+    showView("browse-view");
+    renderBrowseView(document.getElementById("browse-list"), activeSpecies);
+  });
 
   document.getElementById("key-home-btn").addEventListener("click", () => {
     showView("home-view");
@@ -84,6 +141,18 @@ async function main() {
   });
 
   document.getElementById("flash-home-btn").addEventListener("click", () => {
+    showView("home-view");
+    updateStats(activeSpecies);
+  });
+
+  document
+    .getElementById("flashcard-select-home-btn")
+    .addEventListener("click", () => {
+      showView("home-view");
+      updateStats(activeSpecies);
+    });
+
+  document.getElementById("browse-home-btn").addEventListener("click", () => {
     showView("home-view");
     updateStats(activeSpecies);
   });

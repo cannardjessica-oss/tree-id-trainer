@@ -1,5 +1,46 @@
+function groupByGenus(speciesList) {
+  const map = new Map();
+  for (const s of speciesList) {
+    if (!map.has(s.genus)) map.set(s.genus, []);
+    map.get(s.genus).push(s);
+  }
+  const groups = Array.from(map.entries()).map(([genus, species]) => ({
+    genus,
+    species: [...species].sort((a, b) =>
+      a.commonName.localeCompare(b.commonName),
+    ),
+  }));
+  groups.sort((a, b) => a.genus.localeCompare(b.genus));
+  return groups;
+}
+
+const DECKS = {
+  species: {
+    namespace: undefined,
+    buildItems: (speciesList) => speciesList,
+    getId: (item) => item.id,
+    imageFor: (item) => item,
+    frontHint: "Tap to reveal name",
+    frontContent: () => null,
+    backTitle: (item) => item.commonName,
+    backSubtitle: (item) => item.latinName,
+  },
+  genus: {
+    namespace: "genus",
+    buildItems: (speciesList) => groupByGenus(speciesList),
+    getId: (item) => item.genus,
+    imageFor: (item) => item.species[0],
+    frontHint: "Tap to reveal genus",
+    frontContent: (item) => item.species.map((s) => s.commonName).join(", "),
+    backTitle: (item) => item.genus,
+    backSubtitle: (item) => item.species.map((s) => s.latinName),
+  },
+};
+
 export function initFlashcardMode({ speciesList, progress, elements }) {
-  let filtered = [...speciesList];
+  let currentDeck = DECKS.species;
+  let items = [];
+  let filtered = [];
   let index = 0;
   let flipped = false;
   let filterMode = "all";
@@ -27,8 +68,14 @@ export function initFlashcardMode({ speciesList, progress, elements }) {
   function applyFilter() {
     filtered =
       filterMode === "all"
-        ? [...speciesList]
-        : speciesList.filter((s) => progress.getStatus(s.id) === filterMode);
+        ? [...items]
+        : items.filter(
+            (item) =>
+              progress.getStatus(
+                currentDeck.getId(item),
+                currentDeck.namespace,
+              ) === filterMode,
+          );
     index = 0;
     flipped = false;
     render();
@@ -53,7 +100,7 @@ export function initFlashcardMode({ speciesList, progress, elements }) {
       return;
     }
 
-    const species = filtered[index];
+    const item = filtered[index];
     elements.progressLabel.textContent = `${index + 1} / ${filtered.length}`;
     elements.card.innerHTML = "";
 
@@ -62,27 +109,49 @@ export function initFlashcardMode({ speciesList, progress, elements }) {
     face.tabIndex = 0;
 
     const img = createSpeciesImage(
-      species,
-      flipped ? `${species.commonName} leaves` : "Tree leaves",
+      currentDeck.imageFor(item),
+      flipped ? `${currentDeck.backTitle(item)} example` : "Tree leaves",
     );
     face.appendChild(img);
 
     if (!flipped) {
+      const frontText = currentDeck.frontContent(item);
+      if (frontText) {
+        const names = document.createElement("p");
+        names.className = "front-names";
+        names.textContent = frontText;
+        face.appendChild(names);
+      }
       const hint = document.createElement("p");
       hint.className = "tap-hint";
-      hint.textContent = "Tap to reveal name";
+      hint.textContent = currentDeck.frontHint;
       face.appendChild(hint);
       elements.answerControls.classList.add("hidden");
     } else {
       const h2 = document.createElement("h2");
-      h2.textContent = species.commonName;
-      const latin = document.createElement("p");
-      latin.className = "latin-name";
-      const em = document.createElement("em");
-      em.textContent = species.latinName;
-      latin.appendChild(em);
+      h2.textContent = currentDeck.backTitle(item);
       face.appendChild(h2);
-      face.appendChild(latin);
+
+      const subtitle = currentDeck.backSubtitle(item);
+      if (Array.isArray(subtitle)) {
+        const ul = document.createElement("ul");
+        ul.className = "latin-list";
+        subtitle.forEach((name) => {
+          const li = document.createElement("li");
+          const em = document.createElement("em");
+          em.textContent = name;
+          li.appendChild(em);
+          ul.appendChild(li);
+        });
+        face.appendChild(ul);
+      } else {
+        const latin = document.createElement("p");
+        latin.className = "latin-name";
+        const em = document.createElement("em");
+        em.textContent = subtitle;
+        latin.appendChild(em);
+        face.appendChild(latin);
+      }
       elements.answerControls.classList.remove("hidden");
     }
 
@@ -106,15 +175,33 @@ export function initFlashcardMode({ speciesList, progress, elements }) {
     render();
   }
 
+  function start(deckType = "species") {
+    currentDeck = DECKS[deckType] || DECKS.species;
+    items = currentDeck.buildItems(speciesList);
+    filterMode = "all";
+    elements.filterRadios.forEach((radio) => {
+      radio.checked = radio.value === "all";
+    });
+    applyFilter();
+  }
+
   elements.knewItBtn.addEventListener("click", () => {
     if (filtered.length === 0) return;
-    progress.setStatus(filtered[index].id, "known");
+    progress.setStatus(
+      currentDeck.getId(filtered[index]),
+      "known",
+      currentDeck.namespace,
+    );
     goNext();
   });
 
   elements.stillLearningBtn.addEventListener("click", () => {
     if (filtered.length === 0) return;
-    progress.setStatus(filtered[index].id, "learning");
+    progress.setStatus(
+      currentDeck.getId(filtered[index]),
+      "learning",
+      currentDeck.namespace,
+    );
     goNext();
   });
 
@@ -128,5 +215,5 @@ export function initFlashcardMode({ speciesList, progress, elements }) {
     });
   });
 
-  return { start: applyFilter };
+  return { start };
 }
